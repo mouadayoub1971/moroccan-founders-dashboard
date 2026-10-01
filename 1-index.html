@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moroccan Startup Founders</title>
+<style>
+:root{--ivory:#fdfcfb;--sand:#f4efec;--onyx:#1f2322;--teal:#73a89a;--teal-d:#4f8576;--mut:#6b716f;--line:#e6dfda}
+*{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{margin:0;font-family:Melange,"Helvetica Neue",Helvetica,Arial,ui-sans-serif,system-ui,sans-serif;background:var(--ivory);color:var(--onyx);line-height:1.2;font-size:16px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:28px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;letter-spacing:-.01em}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--teal)}
+.pill{border:1px solid var(--onyx);border-radius:9999px;padding:9px 18px;font-size:14px;color:var(--onyx);background:transparent}
+.hero{padding:72px 0 56px;max-width:820px}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-d);font-weight:600;margin-bottom:20px}
+h1{margin:0 0 24px;font-weight:600;font-size:clamp(40px,6vw,72px);line-height:1.02;letter-spacing:-.035em}
+.lead{margin:0;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#454b49;max-width:620px}
+.stats{display:flex;gap:48px;margin-top:40px}
+.stat b{display:block;font-size:34px;font-weight:600;letter-spacing:-.02em}
+.stat span{font-size:13px;color:var(--mut)}
+.bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:20px 0;border-top:1px solid var(--line)}
+input,select{font:inherit;font-size:15px;padding:13px 20px;border:1px solid var(--line);border-radius:9999px;background:#fff;color:var(--onyx);outline:none}
+input{flex:1;min-width:240px}
+input:focus,select:focus{border-color:var(--teal)}
+.count{margin-left:auto;color:var(--mut);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding:12px 0 72px}
+.card{background:var(--sand);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:20px;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(31,35,34,.08)}
+.top{display:flex;gap:14px;align-items:center}
+.logo{width:52px;height:52px;border-radius:14px;background:#fff;object-fit:contain;flex:none;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:20px;color:var(--teal-d);padding:4px}
+.co{font-weight:600;font-size:18px;line-height:1.15;letter-spacing:-.01em}
+.ind{color:var(--mut);font-size:12.5px;margin-top:4px;line-height:1.3}
+.who{border-top:1px solid #e0d8d3;padding-top:18px}
+.nm{font-weight:600;font-size:15px}
+.tt{color:var(--mut);font-size:13.5px;margin-top:4px;line-height:1.3}
+.links{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+a.em{font-size:13.5px;color:var(--onyx);text-decoration:none;word-break:break-all;display:flex;gap:8px;align-items:center}
+a.em:hover{text-decoration:underline}
+a.li{align-self:flex-start;font-size:13px;color:var(--onyx);text-decoration:none;border:1px solid var(--onyx);border-radius:9999px;padding:7px 14px;font-weight:500;transition:background .2s,color .2s}
+a.li:hover{background:var(--onyx);color:var(--ivory)}
+footer{border-top:1px solid var(--line);color:var(--mut);font-size:13px;padding:24px 0 40px}
+@media(max-width:640px){.wrap{padding:0 20px}.hero{padding:40px 0}.stats{gap:28px}.count{margin-left:0;width:100%}}
+</style></head><body>
+<div class="wrap">
+<nav><div class="brand"><span class="dot"></span>Founders Index</div><span class="pill">Morocco</span></nav>
+<section class="hero">
+<div class="eyebrow">Startup directory</div>
+<h1>The founders building Morocco's startups.</h1>
+<p class="lead">A curated list of founders and co-founders across Moroccan startups, with their company, role and direct contact.</p>
+<div class="stats"><div class="stat"><b id="sf">0</b><span>Founders</span></div><div class="stat"><b id="si">0</b><span>Industries</span></div></div>
+</section>
+<div class="bar"><input id="q" placeholder="Search founder, startup or industry"><select id="ind"><option value="">All industries</option></select><span class="count" id="count"></span></div>
+<div class="grid" id="grid"></div>
+<footer>Source: Lusha.</footer></div>
+<script>
+fetch('founders.json').then(r=>r.json()).then(data=>{
+ const grid=document.getElementById('grid'),q=document.getElementById('q'),sel=document.getElementById('ind'),cnt=document.getElementById('count');
+ const top=s=>(s||'').split(',')[0].trim();
+ const inds=[...new Set(data.map(d=>top(d.industry)).filter(Boolean))].sort();
+ inds.forEach(i=>{const o=document.createElement('option');o.value=i;o.textContent=i;sel.appendChild(o)});
+ document.getElementById('sf').textContent=data.length;document.getElementById('si').textContent=inds.length;
+ const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ function render(){const t=q.value.toLowerCase(),i=sel.value;
+  const L=data.filter(d=>(!i||top(d.industry)===i)&&(!t||(d.name+d.company+d.industry+d.title+d.email).toLowerCase().includes(t)));
+  cnt.textContent=L.length+' of '+data.length+' founders';
+  grid.innerHTML=L.map(d=>`<div class="card"><div class="top">${d.logo?`<img class="logo" src="${esc(d.logo.replace('logos/',''))}" alt="" onerror="this.outerHTML='<div class=logo>${esc(d.company).charAt(0)}</div>'">`:`<div class="logo">${esc(d.company).charAt(0)}</div>`}<div><div class="co">${esc(d.company)}</div><div class="ind">${esc(d.industry)}</div></div></div><div class="who"><div class="nm">${esc(d.name)}</div><div class="tt">${esc(d.title)}</div></div><div class="links">${d.email?`<a class="em" href="mailto:${esc(d.email)}">${esc(d.email)}</a>`:''}${d.linkedin?`<a class="li" href="${esc(d.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>`:''}</div></div>`).join('')}
+ q.oninput=render;sel.onchange=render;render();});
+</script></body></html>
