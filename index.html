@@ -27,7 +27,7 @@ input:focus,select:focus{border-color:var(--teal)}
 .card{background:var(--sand);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:20px;transition:transform .2s,box-shadow .2s}
 .card:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(31,35,34,.08)}
 .top{display:flex;gap:14px;align-items:center}
-.logo{width:52px;height:52px;border-radius:14px;background:#fff;object-fit:contain;flex:none;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:20px;color:var(--teal-d);padding:4px}
+.logo{width:68px;height:68px;border-radius:14px;background:#fff;object-fit:contain;flex:none;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:20px;color:var(--teal-d);padding:4px}
 .co{font-weight:600;font-size:18px;line-height:1.15;letter-spacing:-.01em}
 .ind{color:var(--mut);font-size:12.5px;margin-top:4px;line-height:1.3}
 .who{border-top:1px solid #e0d8d3;padding-top:18px}
@@ -63,6 +63,6 @@ fetch('founders.json').then(r=>r.json()).then(data=>{
  function render(){const t=q.value.toLowerCase(),i=sel.value;
   const L=data.filter(d=>(!i||top(d.industry)===i)&&(!t||(d.name+d.company+d.industry+d.title+d.email).toLowerCase().includes(t)));
   cnt.textContent=L.length+' of '+data.length+' founders';
-  grid.innerHTML=L.map(d=>`<div class="card"><div class="top">${d.logo?`<img class="logo" src="${esc(d.logo.replace('logos/',''))}" alt="" onerror="this.outerHTML='<div class=logo>${esc(d.company).charAt(0)}</div>'">`:`<div class="logo">${esc(d.company).charAt(0)}</div>`}<div><div class="co">${esc(d.company)}</div><div class="ind">${esc(d.industry)}</div></div></div><div class="who"><div class="nm">${esc(d.name)}</div><div class="tt">${esc(d.title)}</div></div><div class="links">${d.email?`<a class="em" href="mailto:${esc(d.email)}">${esc(d.email)}</a>`:''}${d.linkedin?`<a class="li" href="${esc(d.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>`:''}</div></div>`).join('')}
+  grid.innerHTML=L.map(d=>`<div class="card"><div class="top">${d.logo?`<img class="logo" src="${esc(d.logo.replace('logos/',''))}" alt="${esc(d.company)} logo" onerror="this.outerHTML='<div class=logo>${esc(d.company).charAt(0)}</div>'">`:`<div class="logo">${esc(d.company).charAt(0)}</div>`}<div><div class="co">${esc(d.company)}</div><div class="ind">${esc(d.industry)}</div></div></div><div class="who"><div class="nm">${esc(d.name)}</div><div class="tt">${esc(d.title)}</div></div><div class="links">${d.email?`<a class="em" href="mailto:${esc(d.email)}">${esc(d.email)}</a>`:''}${d.linkedin?`<a class="li" href="${esc(d.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>`:''}</div></div>`).join('')}
  q.oninput=render;sel.onchange=render;render();});
 </script></body></html>
